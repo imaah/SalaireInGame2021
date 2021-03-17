@@ -1,12 +1,8 @@
-from copy import copy
 base_pv = 100
 memory = {}
 
 
-def turn(smith=base_pv, me=base_pv, actions=None):
-    if actions is None:
-        actions = []
-
+def turn(smith=base_pv, me=base_pv):
     if smith <= 0:
         return 1
     if me <= 0:
@@ -19,17 +15,14 @@ def turn(smith=base_pv, me=base_pv, actions=None):
 
     for p in ['smith', 'me']:
         for d in [2, 5, 7]:
-
-            cur_actions = copy(actions)
-            cur_actions.insert(0, p)
-
             if p == 'smith':
-                num += turn(smith, me - d, cur_actions)
+                num += turn(smith, me - d)
             else:
-                num += turn(smith - d, me, cur_actions)
+                num += turn(smith - d, me)
 
     memory[(smith, me)] = num
     return num
 
 
-print(turn() % 10**9)
+result = turn()
+print(result % 10**9)
